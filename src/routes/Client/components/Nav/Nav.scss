@@ -1,0 +1,39 @@
+.nav {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	border-bottom: 1px solid #eee;
+}
+
+.link {
+	text-decoration: none;
+	transition: 120ms ease-out;
+	padding: 7px 14px;
+	backface-visibility: hidden;
+	text-transform: uppercase;
+	font-size: 14px;
+	font-family: "PT Sans Caption", fantasy;
+	position: relative;
+	overflow: hidden;
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #000;
+		transition: 120ms ease-out;
+		transform: translateY(100%);
+		z-index: -1;
+	}
+}
+
+.active {
+	color: white;
+	transition: 400ms ease;
+	&::before {
+		transform: translateY(0);
+		transition: 350ms ease;
+	}
+}

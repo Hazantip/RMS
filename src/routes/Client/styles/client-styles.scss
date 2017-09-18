@@ -23,23 +23,6 @@ h2 {
 	color: $vin-blue;
 }
 
-nav {
-	//padding: 8px 10px;
-	a {
-		text-decoration: none;
-		transition: 120ms ease-in;
-		padding: 5px 10px;
-		backface-visibility: hidden;
-		text-transform: uppercase;
-		font-size: 14px;
-		font-family: "PT Sans Caption", fantasy;
-		:global &.active {
-			background-color: #000;
-			color: white;
-		}
-	}
-}
-
 .image {
 	display: block;
 	width: 50%;
