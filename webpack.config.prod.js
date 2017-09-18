@@ -93,11 +93,18 @@ export default {
 				test: /\.svg(\?v=\d+.\d+.\d+)?$/,
 				loader: 'url-loader?limit=10000&mimetype=image/svg+xml&name=[name].[ext]'
 			},
-			{test: /\.(jpe?g|png|gif)$/i, loader: 'file-loader?name=[name].[ext]'},
+			{
+				test: /\.(png|jpg|jpeg|gif|svg)$/,
+				loaders: [
+					// root=. - to make support for relative URLs
+					'url-loader?limit=10000&root=.&name=images/[name].[ext]'
+					,'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+				]
+			},
 			{test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
 			{
 				test: /(\.css|\.scss|\.sass)$/,
-				loader: ExtractTextPlugin.extract('css-loader?sourceMap!postcss-loader!sass-loader?sourceMap')
+				loader: ExtractTextPlugin.extract('css-loader?sourceMap&importLoaders=1&modules&camelCase=dashes&localIdentName=[local]--[hash:base64:5]!postcss-loader!sass-loader?sourceMap')
 			}
 		]
 	}

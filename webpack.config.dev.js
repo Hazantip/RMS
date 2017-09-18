@@ -69,8 +69,16 @@ export default {
 			{test: /\.(jpe?g|png|gif)$/i, loader: 'file-loader?name=[name].[ext]'},
 			{test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
 			{
-				test: /(\.css|\.scss|\.sass)$/,
-				loaders: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'sass-loader?sourceMap']
+				//test: /(\.css|\.scss|\.sass)$/,
+				//loaders: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'sass-loader?sourceMap']
+				'test': /\.css|\.scss$/,
+				'use': [
+					// source maps messes with background-image  -  https://github.com/webpack-contrib/style-loader#recommended-configuration
+					'style-loader?convertToAbsoluteUrls',
+					'css-loader?sourceMap&importLoaders=1&modules&camelCase=dashes&localIdentName=[local]--[hash:base64:5]',
+					'postcss-loader',
+					'sass-loader?sourceMap',
+				],
 			}
 		]
 	}

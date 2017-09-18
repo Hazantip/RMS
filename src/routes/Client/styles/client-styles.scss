@@ -32,7 +32,7 @@ nav {
 		text-transform: uppercase;
 		font-size: 14px;
 		font-family: "PT Sans Caption", fantasy;
-		&.active {
+		:global &.active {
 			background-color: #000;
 			color: white;
 		}
@@ -45,7 +45,20 @@ nav {
 	margin: 0 auto;
 }
 
+:global .image {
+	display: block;
+	width: 50%;
+	margin: 0 auto;
+}
+
 .image-bg {
+	width: 100%;
+	height: 200px;
+	background: url('/assets/images/bg.jpg') 50% 50% no-repeat;
+	background-size: cover;
+}
+
+:global .image-bg {
 	width: 100%;
 	height: 200px;
 	background: url('/assets/images/bg.jpg') 50% 50% no-repeat;

@@ -1,12 +1,12 @@
 import { get } from 'lodash';
 import React from 'react';
 import {Link} from 'react-router-dom';
-import '../styles/about-page.css';
+import * as css from '../styles/about-page.css';
 
 const AboutPage = (props) => {
 	return (
 		<div>
-			<h2 className="about-title alt-header">
+			<h2 className={`${css.altHeader}`}>
 				About
 				<br/>
 				{get(props, ['name'], '')}
