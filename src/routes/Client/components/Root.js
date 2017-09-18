@@ -1,3 +1,5 @@
+console.log('root');
+
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {ConnectedRouter} from 'react-router-redux';

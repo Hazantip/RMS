@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import client from './client';
-import admin from './admin';
+import client from './routes/Client/reducers/client';
+import admin from './routes/Admin/reducers/admin';
 import {routerReducer} from 'react-router-redux';
 
 const rootReducer = combineReducers({

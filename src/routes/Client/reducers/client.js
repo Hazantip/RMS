@@ -1,14 +1,25 @@
 import {DEFAULT_ACTION_CONST} from '../constants/actionTypes';
 //import func from '../utils/somFunc';
 import { assign } from 'lodash';
-import initialState from './initialState';
+
+const initialState = {
+	client: {
+		name: 'client data',
+		level1: {
+			'name': 'level 1',
+			level2: {
+				'name': 'level 2',
+			}
+		}
+	},
+};
 
 // IMPORTANT: Note that with Redux, state should NEVER be changed.
 // State is considered immutable. Instead,
 // create a copy of the state passed and set new values on the copy.
 // Note that I'm using Object.assign to create a copy of current state
 // and update values on the copy.
-export default function clientReducer(state = initialState.client, action) {
+export default function clientReducer(state = initialState, action) {
 	let newState;
 
 	switch (action.type) {

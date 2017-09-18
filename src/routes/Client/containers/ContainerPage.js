@@ -7,7 +7,6 @@ import * as actions from '../actions/defaultAction';
 import AboutPage from '../components/AboutPage';
 
 export const ContainerPage = (props) => {
-	console.log(props);
 	return (
 		<AboutPage
 			defaultAction={props.actions.defaultAction}

@@ -1,14 +1,25 @@
-import {DEFAULT_ACTION_CONST} from '../constants/actionTypes';
+import {DEFAULT_ACTION_CONST} from '../../Client/constants/actionTypes';
 //import func from '../utils/somFunc';
 import { assign } from 'lodash';
-import initialState from './initialState';
+
+const initialState = {
+	admin: {
+		level1: {
+			'name': 'level 1',
+			level2: {
+				'name': 'level 2',
+			}
+		},
+		name: 'admin data'
+	},
+};
 
 // IMPORTANT: Note that with Redux, state should NEVER be changed.
 // State is considered immutable. Instead,
 // create a copy of the state passed and set new values on the copy.
 // Note that I'm using Object.assign to create a copy of current state
 // and update values on the copy.
-export default function adminReducer(state = initialState.admin, action) {
+export default function adminReducer(state = initialState, action) {
 	let newState;
 
 	switch (action.type) {

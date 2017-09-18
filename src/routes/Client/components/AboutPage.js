@@ -6,7 +6,7 @@ import '../styles/about-page.css';
 const AboutPage = (props) => {
 	return (
 		<div>
-			<h2 className="alt-header">
+			<h2 className="about-title alt-header">
 				About
 				<br/>
 				{get(props, ['name'], '')}
@@ -27,6 +27,10 @@ const AboutPage = (props) => {
 			<p>
 				<Link to="/">Go to home</Link>
 			</p>
+			<h4>img tag</h4>
+			<img className="image" src="/assets/images/bg.jpg" alt=""/>
+			<h4>background image</h4>
+			<div className="image-bg" />
 		</div>
 	);
 };

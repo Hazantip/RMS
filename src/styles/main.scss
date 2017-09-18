@@ -1,0 +1,74 @@
+//Global SCSS
+@import 'vars';
+@import 'mixins';
+@import 'helpers';
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+	color: $black;
+	font-size: 16px;
+	font-family: Tahoma, $fontArial;
+	line-height: 1.4;
+}
+
+
+:global {
+	a {
+		cursor: pointer;
+		color: inherit;
+		display: inline-block;
+	}
+	
+	.link-underlined {
+		position: relative;
+		display: inline-block;
+		color: $primaryBlueLight;
+		text-decoration: none;
+		transition: color 250ms ease;
+		&::after {
+			content: '';
+			display: block;
+			position: absolute;
+			right: 0;
+			left: 0;
+			bottom: -1px;
+			height: 1px;
+			background-color: $black4;
+		}
+		&:hover {
+			color: lighten($primaryBlueLight, 10%);
+		}
+		&.secondary {
+			color: $black3;
+			&:hover {
+				color: $black2;
+			}
+		}
+	}
+}
+
+:global(.container) {
+	width: 1440px;
+	margin: 0 auto;
+	//max-width: 100%;
+	padding: 0 30px;
+	@include clearfix();
+}
+
+button {
+	cursor: pointer;
+}
+
+:global(.fa-check) {
+	color: $primaryGreen;
+}
+
+:global(.fa-times) {
+	color: $primaryRed;
+}

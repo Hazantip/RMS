@@ -1,0 +1,14 @@
+@import 'vars';
+@import 'mixins';
+
+:global(.clearfix) {
+	@include clearfix();
+}
+
+:global(.pull-left) {
+	float: left;
+}
+
+:global(.pull-right) {
+	float: right;
+}
