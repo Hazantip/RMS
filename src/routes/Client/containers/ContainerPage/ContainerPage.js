@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as actions from '../actions/defaultAction';
-import AboutPage from '../components/AboutPage';
+import * as actions from '../../actions/defaultAction';
+import AboutPage from '../../components/AboutPage/AboutPage';
 
 export const ContainerPage = (props) => {
 	return (

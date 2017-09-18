@@ -1,19 +1,17 @@
 import { get } from 'lodash';
 import React from 'react';
 import {Link} from 'react-router-dom';
-import * as css from '../styles/about-page.css';
-import * as scss from '../styles/client-styles.scss';
+import * as css from '../../styles/about-page.css';
 
-// Since this component is simple and static, there's no parent container for it.
-const AboutNestedPage = (props) => {
+const AboutPage = (props) => {
 	return (
 		<div>
-			<h2 className={`${css.altHeader}`}>About Nested Page at {get(props, 'location.pathname', '???')}</h2>
+			<h2 className={`${css.altHeader}`}>
+				About
+				<br/>
+				{get(props, ['name'], '')}
+			</h2>
 			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur dolores, et ipsa
-				mollitia nesciunt nihil nulla numquam odit officia omnis perspiciatis recusandae repudiandae unde.
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur dolores, et ipsa
-				mollitia nesciunt nihil nulla numquam odit officia omnis perspiciatis recusandae repudiandae unde.
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur dolores, et ipsa
 				mollitia nesciunt nihil nulla numquam odit officia omnis perspiciatis recusandae repudiandae unde.
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur dolores, et ipsa
@@ -30,11 +28,11 @@ const AboutNestedPage = (props) => {
 				<Link to="/">Go to home</Link>
 			</p>
 			<h4>img tag</h4>
-			<img className={`${scss.image}`} src="/assets/images/bg.jpg" alt=""/>
+			<img className="image" src="/assets/images/bg.jpg" alt=""/>
 			<h4>background image</h4>
-			<div className={`${scss.imageBg}`} />
+			<div className="image-bg" />
 		</div>
 	);
 };
 
-export default AboutNestedPage;
+export default AboutPage;
