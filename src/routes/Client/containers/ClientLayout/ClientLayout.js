@@ -1,6 +1,7 @@
 //import { get } from 'lodash';
 import React from 'react';
 //import {Route} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //import Nav from '../../components/Nav/Nav';
 //import AboutPage from '../../components/AboutPage/AboutPage';
 //import AboutNestedPage from '../../components/AboutNestedPage/AboutNestedPage';
@@ -12,7 +13,9 @@ const ClientLayout = () => {
 			{/*<Nav />*/}
 
 			<h1>Welcome to client layout</h1>
-			<h2>Get Started</h2>
+			<h2 className="title">Get Started</h2>
+
+			<Link to="/badlink">Go to badlink route --></Link>
 
 			{/*<Route path="/about" component={AboutPage} />*/}
 			{/*<Route path={`${get(props,'match.url')}about/nested/nested`} component={AboutNestedPage} />*/}
