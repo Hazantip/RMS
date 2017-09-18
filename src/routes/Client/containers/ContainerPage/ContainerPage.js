@@ -3,26 +3,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as actions from '../../actions/defaultAction';
+import * as actions from '../../actions/testAction';
 import AboutPage from '../../components/AboutPage/AboutPage';
 
 export const ContainerPage = (props) => {
+	console.log('container: ', props);
+
 	return (
 		<AboutPage
-			defaultAction={props.actions.defaultAction}
-			name={props.name}
+			testAction={props.actions.testAction}
+			testProp={props.testProp}
 		/>
 	);
 };
 
 ContainerPage.propTypes = {
 	actions: PropTypes.object.isRequired,
-	name: PropTypes.string
+	testProp: PropTypes.string,
+	//client: PropTypes.object
 };
 
 function mapStateToProps(state) {
 	return {
-		name: get(state, ['client', 'name'])
+		testProp: get(state, ['client', 'testProp']),
+		//client: get(state, 'client'),
 	};
 }
 
