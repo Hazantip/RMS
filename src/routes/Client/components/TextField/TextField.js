@@ -1,14 +1,12 @@
-import { noop } from 'lodash';
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as s from './TextField.scss';
 
 class TextField extends React.PureComponent {
 	static propTypes = {
-		'inputProps': PropTypes.object,
+		'value': PropTypes.string,
 		'style': PropTypes.object,
-		'onChange': PropTypes.func,
-		'onAfterChange': PropTypes.func,
 		'label': PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.node,
@@ -16,21 +14,9 @@ class TextField extends React.PureComponent {
 	};
 
 	static defaultProps = {
-		'value': false,
-		'onChange': noop,
-		'onAfterChange': noop
+		'style': {},
+		'value': '',
 	};
-
-	state = {
-		value: ''
-	};
-
-	onChange(e) {
-		this.props.onChange();
-		this.setState({
-			'value': e.target.value
-		}, this.props.onAfterChange);
-	}
 
 	renderLabel() {
 		if (!this.props.label) {
@@ -40,17 +26,13 @@ class TextField extends React.PureComponent {
 	}
 
 	render() {
+		const inputProps = _.omit(this.props, ['label', 'style', 'fieldValue']);
+		const { value, style } = this.props;
 		return (
-			<div className={s.radio} style={this.props.style}>
-				<label className={`${s.label} ${this.state.value ? s.active : ''}`}>
+			<div className={s.radio} style={style}>
+				<label className={`${s.label} ${value ? s.active : ''}`}>
 					{this.renderLabel()}
-					<input
-						type="text"
-						className={s.input}
-						onChange={this.onChange.bind(this)}
-						value={this.state.value}
-						{...this.props.inputProps}
-					/>
+					<input type="text" className={s.input} {...inputProps} />
 				</label>
 			</div>
 		);

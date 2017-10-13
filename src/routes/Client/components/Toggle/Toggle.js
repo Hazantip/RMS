@@ -1,15 +1,25 @@
-import { noop } from 'lodash';
+import _ from 'lodash';
+import { autobind } from 'core-decorators';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import { actions as formActions } from 'react-redux-form';
 import * as s from './Toggle.scss';
 
+function mapDispatchToProps(dispatch) {
+	return {
+		'formChange': bindActionCreators(formActions.change, dispatch),
+	};
+}
+
+@autobind
 class Toggle extends React.PureComponent {
 	static propTypes = {
-		'isActive': PropTypes.bool,
-		'inputProps': PropTypes.object,
-		'style': PropTypes.object,
+		'value': PropTypes.bool.isRequired,
 		'onChange': PropTypes.func,
-		'onAfterChange': PropTypes.func,
+		'formChange': PropTypes.func,
+		'style': PropTypes.object,
 		'label': PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.node,
@@ -17,20 +27,13 @@ class Toggle extends React.PureComponent {
 	};
 
 	static defaultProps = {
-		'isActive': false,
-		'onChange': noop,
-		'onAfterChange': noop,
+		'label': '',
 	};
 
-	state = {
-		isActive: this.props.isActive
-	};
-
-	onChange(e) {
-		this.props.onChange();
-		this.setState({
-			'isActive': e.target.checked
-		}, this.props.onAfterChange);
+	onChange() {
+		const name = _.get(this.props, 'name', '');
+		const checked = this.props.value;
+		this.props.formChange(name, !checked);
 	}
 
 	renderLabel() {
@@ -41,15 +44,12 @@ class Toggle extends React.PureComponent {
 	}
 
 	render() {
+		const inputProps = _.omit(this.props, ['fieldValue', 'formChange', 'onChange']);
+
 		return (
 			<div className={s.toggle} style={this.props.style}>
-				<label className={`${s.label} ${this.state.isActive ? s.active : ''}`}>
-					<input
-						type="checkbox"
-						className={s.input}
-						checked={this.state.isActive}
-						onChange={this.onChange.bind(this)}
-						{...this.props.inputProps} />
+				<label className={`${s.label} ${this.props.value ? s.active : ''}`}>
+					<input type="checkbox" className={s.input} onChange={this.onChange} {...inputProps} />
 					{this.renderLabel()}
 					<span className={s.box} />
 				</label>
@@ -58,4 +58,4 @@ class Toggle extends React.PureComponent {
 	}
 }
 
-export default Toggle;
+export default connect(null, mapDispatchToProps)(Toggle);
