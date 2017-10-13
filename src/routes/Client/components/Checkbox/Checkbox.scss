@@ -1,0 +1,86 @@
+$size: 20;
+$activeColor: #86d993;
+
+.checkbox {
+	position: relative;
+	color: rgb(255, 255, 255);
+}
+
+.input {
+	display: none;
+}
+
+.label {
+	position: relative;
+	display: inline-block;
+	min-height: $size + px;
+	cursor: pointer;
+	html[dir='rtl'] & {
+		padding-right: $size * 1.25 + px;
+	}
+	html:not([dir='rtl']) & {
+		padding-left: $size * 1.25 + px;
+	}
+}
+
+.box {
+	display: block;
+	position: absolute;
+	top: 0.25em;            // NOTE: depends on font size
+	width: $size * 0.7 + px;
+	height: $size * 0.7 + px;
+	backface-visibility: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	html[dir='rtl'] & {
+		right: 0.25em;      // NOTE: depends on font size
+	}
+	html:not([dir='rtl']) & {
+		left: 0.25em;       // NOTE: depends on font size
+	}
+	&::before,
+	&::after {
+		display: block;
+		opacity: 0;
+		content: "";
+		position: absolute;
+		background: rgb(221, 221, 221);
+		transition: 250ms ease 0ms;
+	}
+	&::before {
+		right: -$size * 0.3 + px;
+		top: $size * 0.15 + px;
+		width: $size * 0.7 + px;
+		height: $size * 0.1 + px;
+		transform-origin: 0 0 0;
+		transform: rotate(-50deg) translate(-$size * 0.15 + px, $size * 0.2 + px) scaleX(0);
+	}
+	&::after {
+		top: $size * 0.25 + px;
+		right: $size * 0.2 + px;
+		width: $size * 0.35 + px;
+		height: $size * 0.1 + px;
+		transform: rotate(45deg) translate(-$size * 0.25 + px, 0);
+		transition-delay: 150ms;
+	}
+	.active & {
+		&::before,
+		&::after {
+			opacity: 1;
+		}
+		&::before {
+			transform: rotate(-50deg) translate(-$size * 0.15 + px, $size * 0.2 + px) scaleX(1);
+			transition-delay: 150ms;
+		}
+		&::after {
+			top: $size * 0.25 + px;
+			right: $size * 0.2 + px;
+			width: $size * 0.35 + px;
+			height: $size * 0.1 + px;
+			transform: rotate(45deg) translate(0, 0);
+		}
+	}
+}
+
+.data-label {
+	user-select: none;
+}

@@ -1,0 +1,46 @@
+$size: 44;
+$activeColor: #86d993;
+
+.text-field {
+	position: relative;
+	color: rgb(255, 255, 255);
+}
+
+
+.label {
+	position: relative;
+	min-height: $size + px;
+	cursor: pointer;
+	display: flex;
+	padding: 0;
+	justify-content: unset;
+	align-items: center;
+}
+
+
+.input {
+	flex: 1 1 100%;
+	padding: 10px 12px;
+	border: 1px solid darkgrey;
+	border-radius: 4px;
+	outline: none;
+	transition: 300ms ease;
+	&:focus {
+		border-color: crimson;
+	}
+	&:active {
+		border-color: crimson;
+	}
+}
+
+
+.data-label {
+	user-select: none;
+	flex: 0 2 auto;
+	html[dir='rtl'] & {
+		padding-left: 15px;
+	}
+	html:not([dir='rtl']) & {
+		padding-right: 15px;
+	}
+}

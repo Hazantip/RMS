@@ -7,6 +7,7 @@ import * as actions from '../../actions/testAction';
 import AboutPage from '../../components/AboutPage/AboutPage';
 
 export const ContainerPage = (props) => {
+	//eslint-disable-next-line no-console
 	console.log('container: ', props);
 
 	return (

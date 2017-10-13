@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import * as s from './Nav.scss';
 
-const Nav = (props) => {
+const Nav = () => {
 	return (
 		<nav className={s.nav}>
 			<NavLink exact to="/" className={s.link} activeClassName={s.active}>Home</NavLink>

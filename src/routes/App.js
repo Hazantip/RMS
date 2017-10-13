@@ -9,6 +9,7 @@ import Nav from './Client/components/Nav/Nav';
 import AboutPage from './Client/components/AboutPage/AboutPage';
 import AboutNestedPage from './Client/components/AboutNestedPage/AboutNestedPage';
 import ContainerPage from './Client/containers/ContainerPage/ContainerPage';
+import ComponentsPage from './Client/containers/ComponentsPage/ComponentsPage';
 import './Client/styles/client-styles.scss';
 
 // This is a class-based component because the current
@@ -31,6 +32,7 @@ class App extends React.Component {
 					<Route path="/about/nested/nested" component={AboutNestedPage} />
 					<Route path="/other/nested" component={AboutNestedPage} />
 					<Route path="/container" component={ContainerPage} />
+					<Route path="/components" component={ComponentsPage} />
 					<Route component={NotFoundPage}/>
 					{/*<Route path="/admin" component={AdminLayout} />*/}
 					{/*<Route path=":projectId" component={AboutNestedPage} />*/}

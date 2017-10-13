@@ -1,0 +1,29 @@
+.root {
+	position: relative;
+	padding: 50px 30px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.item {
+	position: relative;
+	padding: 20px 30px 30px;
+	margin-bottom: 30px;
+	background: silver;
+	border-radius: 3px;
+}
+
+.title {
+	margin-bottom: 15px;
+	font-family: "PT Sans Caption", sans-serif;
+	font-weight: 600;
+	text-align: center;
+}
+
+.box {
+	display: flex;
+	&-center {
+		display: flex;
+		justify-content: center;
+	}
+}

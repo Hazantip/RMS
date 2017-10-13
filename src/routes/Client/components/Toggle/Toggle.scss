@@ -1,0 +1,86 @@
+$size: 64;
+$activeColor: #86d993;
+
+.toggle {
+	position: relative;
+	color: rgb(255, 255, 255);
+}
+
+.input {
+	display: none;
+}
+
+.label {
+	position: relative;
+	display: inline-block;
+	min-height: $size / 1.6 + px;
+	cursor: pointer;
+	html[dir='rtl'] & {
+		padding-right: $size * 1.25 + px;
+	}
+	html:not([dir='rtl']) & {
+		padding-left: $size * 1.25 + px;
+	}
+}
+
+.box {
+	position: absolute;
+	top: 0.25em;            // NOTE: depends on font size
+	display: block;
+	width: $size + px;
+	height: $size / 2 + px;
+	padding: 2px;
+	border-radius: $size / 2 + px;
+	border: 1px solid #e8eae9;
+	background: #fbfbfb;
+	outline: 0;
+	cursor: pointer;
+	transition: all .4s ease;
+	html[dir='rtl'] & {
+		right: 0.25em;      // NOTE: depends on font size
+	}
+	html:not([dir='rtl']) & {
+		left: 0.25em;       // NOTE: depends on font size
+	}
+	&::after {
+		position: relative;
+		display: block;
+		content: "";
+		width: 50%;
+		height: 100%;
+		border-radius: $size + px;
+		background: #fbfbfb;
+		transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), padding 0.3s ease, width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 0 rgba(0, 0, 0, 0.08);
+	}
+	label:active .box {
+		box-shadow: inset 0 0 0 32px #e8eae9;
+		&:after {
+			padding-right: $size * 0.6 + px;
+		}
+	}
+	.active & {
+		background-color: $activeColor;
+		&::after {
+			transform: translateX(100%);
+			html[dir='rtl'] & {
+				transform: translateX(-100%);
+			}
+		}
+	}
+	.active:active & {
+		box-shadow: none;
+		&::after {
+			padding-right: 0;
+			transform: translateX(68%);
+			width: 60%;
+			html[dir='rtl'] & {
+				transform: translateX(-68%);
+			}
+		}
+	}
+}
+
+.data-label {
+	user-select: none;
+}
