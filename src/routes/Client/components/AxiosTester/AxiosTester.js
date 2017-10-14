@@ -1,7 +1,10 @@
 import _ from 'lodash';
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { autobind } from 'core-decorators';
-import axios from 'axios';
+import * as actions from '../../actions/testAction';
 
 const api = {
 	github: 'https://api.github.com/users/Hazantip',
@@ -13,14 +16,26 @@ const api = {
 	},
 };
 
+function mapStateToProps(state) {
+	return {
+		DATA_FROM_API: _.get(state, 'client.DATA_FROM_API', {}),
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		getDataFromAPI: bindActionCreators(actions.getDataFromAPI, dispatch),
+	};
+}
+
 @autobind
 class AxiosTester extends PureComponent {
+	static propTypes = {
+		'getDataFromAPI': PropTypes.func,
+		'DATA_FROM_API': PropTypes.object,
+	};
 	state = {
 		'isLoading': false,
-		'crossDomain': {
-			'html': '<h1>No html content</h1>',
-			'data': []
-		}
 	};
 	setLoader(state) {
 		this.setState({
@@ -29,42 +44,17 @@ class AxiosTester extends PureComponent {
 	}
 	getData(url = api.github) {
 		this.setLoader(true);
-		const config = {
-			'method': 'get',
-			url,
-		};
-		axios(config)
-			.then(response => {
-				//eslint-disable-next-line no-console
-				console.info({ response });
-				if (response.status >= 200 && response.status < 300) {
-					return response.data;
-				}
-
-			})
-			.then(data => {
-				this.setState({
-					'isLoading': false,
-					'crossDomain': {
-						'html': _.get(data, 'review_content', '<h1>Response is different for html :(</h1>'),
-						'data': _.get(data, 'similar_listings', ['Response is different for data :('])
-					},
-				});
-			})
-			.catch((error) => {
-				this.setLoader(false);
-				// error
-				error = JSON.parse(JSON.stringify(error));
-				//eslint-disable-next-line no-console
-				console.warn({ error });
-			});
+		this.props.getDataFromAPI(url, () => {
+			this.setLoader(false);
+		});
 	}
 	renderData() {
-		const {data} = this.state.crossDomain;
+		const data = _.get(this.props, ['DATA_FROM_API', 'similar_listings'], '');
 
 		if (this.state.isLoading) {
 			return <h1>Loading....</h1>;
 		}
+
 		if (!data.length) {
 			return <h1>No data....</h1>;
 		}
@@ -104,22 +94,17 @@ class AxiosTester extends PureComponent {
 			</ol>
 		);
 	}
-
 	render() {
-		console.log(`${this._reactInternalInstance.getName()}: `, this);
+		//console.log(`${this._reactInternalInstance.getName()}: `, this);
 		return (
 			<div style={{ 'padding': '15px 20px', 'borderRadius': 6, 'border': '1px solid grey', 'margin': '60px 0' }}>
 				<h2>Axios Tester</h2>
 				<button onClick={this.getData.bind(null, api.airbnb.similar)}>Get data</button>
 				<h3>Content</h3>
-				<div
-					//eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: this.state.crossDomain.html }}
-				/>
 				{this.renderData()}
 			</div>
 		);
 	}
 }
 
-export default AxiosTester;
+export default connect(mapStateToProps, mapDispatchToProps)(AxiosTester);

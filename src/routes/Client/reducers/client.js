@@ -1,4 +1,4 @@
-import {TEST_ACTION_CONST} from '../constants/actionTypes';
+import {TEST_ACTION_CONST, GET_DATA_FROM_API} from '../constants/actionTypes';
 //import func from '../utils/somFunc';
 import { assign } from 'lodash';
 
@@ -42,6 +42,11 @@ export default function clientReducer(state = initialState, action) {
 			//}
 
 			return newState;
+
+		case GET_DATA_FROM_API:
+			return assign({}, state, {
+				DATA_FROM_API: action.payload
+			});
 
 		default:
 			return state;

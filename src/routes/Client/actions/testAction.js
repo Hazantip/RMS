@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import * as types from '../constants/actionTypes';
 
 //import {getFormattedDateTime} from '../utils/dateHelper';
@@ -12,4 +13,21 @@ export function testAction(options) {
       payload: options || 'testing',
     });
   };
+}
+
+export function getDataFromAPI(url, callback = _.noop) {
+	return (dispatch, getState, { apiClient }) => {
+
+		return new Promise(async resolve => {
+
+			const response = await apiClient({ url });
+
+			const data = _.get(response, 'data');
+			dispatch({ 'type': types.GET_DATA_FROM_API, 'payload': data });
+
+			await callback();
+			await resolve();
+
+		});
+	};
 }

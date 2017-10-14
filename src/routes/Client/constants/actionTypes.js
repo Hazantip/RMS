@@ -1,1 +1,2 @@
 export const TEST_ACTION_CONST = 'TEST_ACTION_CONST';
+export const GET_DATA_FROM_API = 'GET_DATA_FROM_API';
