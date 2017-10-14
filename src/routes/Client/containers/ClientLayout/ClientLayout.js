@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 //import AboutPage from '../../components/AboutPage/AboutPage';
 //import AboutNestedPage from '../../components/AboutNestedPage/AboutNestedPage';
 //import ContainerPage from '../ContainerPage/ContainerPage';
+import AxiosTester from '../../components/AxiosTester/AxiosTester';
+
 
 const ClientLayout = () => {
 	return (
@@ -16,6 +18,8 @@ const ClientLayout = () => {
 			<h2 className="title">Get Started</h2>
 
 			<Link to="/badlink">Go to badlink route --></Link>
+
+			<AxiosTester />
 
 			{/*<Route path="/about" component={AboutPage} />*/}
 			{/*<Route path={`${get(props,'match.url')}about/nested/nested`} component={AboutNestedPage} />*/}
