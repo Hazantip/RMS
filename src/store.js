@@ -11,12 +11,16 @@ export const history = createHistory();
 
 function configureStoreProd(initialState) {
   const reactRouterMiddleware = routerMiddleware(history);
+  const isBrowser = typeof window !== 'undefined';
+  const thunkExtraArguments = {
+		'apiClient': apiClient({ initialState, isBrowser, history }),
+  };
   const middlewares = [
     // Add other middleware on this line...
 
     // thunk middleware can also accept an extra argument to be passed to each thunk action
     // https://github.com/gaearon/redux-thunk#injecting-a-custom-argument
-    thunk,
+	thunk.withExtraArgument(thunkExtraArguments),
     reactRouterMiddleware,
   ];
 
