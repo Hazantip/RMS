@@ -1,0 +1,153 @@
+/**
+ * Font-family:
+ * The package of IBM’s new typeface, IBM Plex, and accompanying typography code
+ * { @link https://github.com/IBM/type }
+ *
+ * TODO: upload fonts via CDN
+ * While there is no CDN (until v1.0.0),
+ * all fonts are imported in the /client/index.js, using specific appropriated loaders.
+ *
+ * All font sizes in rem units,
+ * relative to recalculated base font size applied to html tag (@see $font-size-base)
+ *
+ * Admin: 1.4rem, Client: 1.6rem
+*/
+@import "styles/vars";
+@import "styles/functions";
+
+// Font-family list
+$font-family: (
+	'mono': unquote("'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace"),
+	'sans': unquote("'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif"),
+	'serif': unquote("'IBM Plex Serif', 'Georgia', Times, serif")
+);
+
+$font-size-base: 62.5%; // => 10px => 1rem
+
+$font-size: (
+	// ----------------------- Title types
+	'giga': (
+		font-size: 7.6rem,
+		line-height: 8.5rem,
+		letter-spacing: -0.2rem,
+	),
+	'mega': (
+		font-size: 5.4rem,
+		line-height: 6.0rem,
+		letter-spacing: -0.1rem,
+	),
+	'large': (
+		font-size: 3.6rem,
+		line-height: 5.0rem,
+		letter-spacing: -0.05rem,
+	),
+	'medium': (
+		font-size: 2.8rem,
+		line-height: 4.0rem,
+		letter-spacing: -0.05rem,
+	),
+	'small': (
+		font-size: 2.0rem,
+		line-height: 3.0rem,
+	),
+	'mini': (
+		font-size: 1.8rem,
+		line-height: 3.0rem,
+	),
+	'micro': (
+		font-size: 1.6rem,
+		line-height: 2.5rem,
+	),
+	'nano': (
+		font-size: 1.4rem,
+		line-height: 2.0rem,
+	),
+	'pico': (
+		font-size: 1.2rem,
+		line-height: 2.0rem,
+	),
+	// ----------------------- Text types
+	'article': (
+		font-size: 1.8rem,
+		line-height: 3.0rem,
+	),
+	'paragraph': (
+		font-size: 1.6rem,
+		line-height: 2.5rem,
+	),
+	'ui-text': (
+		font-size: 1.4rem,
+		line-height: 2.0rem,
+	),
+	'caption': (
+		font-size: 1.2rem,
+		line-height: 2.0rem,
+	),
+	'legal': (
+		font-size: 1.1rem,
+		line-height: 1.5rem,
+	),
+);
+
+$font-colors: (
+	'black': $black,                // alpha 0.85
+	'black-secondary': $black-mid,  // alpha 0.54 instead of 0.55
+	'black-disabled': $black-soft,  // alpha 0.35 instead of 0.4
+	'white': $white,                // alpha 0.9 instead of 1
+	'white-disabled': $white-mid,   // alpha 0.54 instead of 0.6
+	'error': $error,
+	'danger': $danger,
+);
+
+$font-weight: (
+	100: 100,
+	200: 200,
+	300: 300,
+	400: 400,
+	500: 500,
+	600: 600,
+	700: 700,
+	800: 800,
+	900: 900,
+	bold: bold,
+	bolder: bolder,
+	lighter: lighter,
+);
+
+$font-transform: (
+	capitalize: capitalize,
+	uppercase: uppercase,
+	lowercase: lowercase,
+);
+
+/*
+	Usage:
+
+	@include font(
+		$family: Value,      [mono, sans, serif] => $font-family
+		$size: Value,        [giga, mega, large, article, ...] => $font-size
+		$weight: Value,      [bold, normal] => $font-weight
+		$transform: Value,   [capitalize, ...] => $font-transform
+		$color: String,      ['disabled', 'default' ,'error', 'warning'] => $font-colors
+	);
+ */
+@mixin font(
+	$family: null,
+	$size: null,
+	$weight: null,
+	$transform: null,
+	$color: null
+) {
+	font-family: get($font-family, $family);
+	font-weight: $weight;
+	font-size: map-deep-get($font-size, $size, 'font-size');
+	line-height: map-deep-get($font-size, $size, 'line-height');
+	text-transform: $transform;
+	letter-spacing: if($transform == uppercase, 0.05rem, map-deep-get($font-size, $size, 'letter-spacing')); // like js ternary operator
+	color: get($font-colors, $color);
+}
+
+// Font family logic names
+$font-family-text      : get($font-family, sans);
+$font-family-title     : get($font-family, sans);
+$font-family-monospace : get($font-family, mono);

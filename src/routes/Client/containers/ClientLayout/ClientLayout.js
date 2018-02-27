@@ -15,7 +15,7 @@ const ClientLayout = () => {
 			<h1>Welcome to client layout</h1>
 			<h2 className="title">Get Started</h2>
 
-			<Link to="/badlink">Go to badlink route --></Link>
+			<Link to="/badlink">Go to badlink route</Link>
 
 			{/*<Route path="/about" component={AboutPage} />*/}
 			{/*<Route path={`${get(props,'match.url')}about/nested/nested`} component={AboutNestedPage} />*/}

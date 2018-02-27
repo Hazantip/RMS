@@ -1,0 +1,61 @@
+@import '~styles/vars';
+@import '~styles/mixins';
+
+.pop-up {
+	$margin: 20px;
+
+	position: fixed;
+	z-index: 10;
+	left: $margin;
+	top: $margin;
+	right: $margin;
+	bottom: $margin;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.bg {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.85);
+	border-radius: 10px;
+}
+.content-wrap {
+	position: absolute;
+	z-index: 2;
+	top: 10%;
+	bottom: 10%;
+	width: 100%;
+
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: space-between;
+	@include screen('mobile') {
+		// height: 80%;
+		width: 100%;
+	}
+}
+.content {
+	position: relative;
+	flex-grow: 1;
+	width: 100%;
+	// height: 100%;
+	@include screen('mobile') {
+		width: 100%;
+		height: calc(100% - 20px);
+		margin-bottom: 20px;
+		overflow-x: hidden;
+		overflow-y: scroll; /* has to be scroll, not auto */
+  		-webkit-overflow-scrolling: touch;
+	}
+}
+.action-btn {
+	// flex-grow: 0;
+}
+

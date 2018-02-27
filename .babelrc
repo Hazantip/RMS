@@ -1,6 +1,18 @@
 {
 	"presets": ["es2015", "react", "stage-0"],
 	"plugins": [
-		"transform-decorators-legacy"
+		"transform-decorators-legacy",
+		[
+			"module-resolver", {
+				"root": ["./src", "./src/routes"],
+				"alias": {
+					"src": "./src",
+					"Admin": "./src/routes/Admin",
+					"Client": "./src/routes/Client",
+					"Common": "./src/routes/Common",
+					"styles": "./src/styles"
+				}
+			}
+		]
 	]
 }

@@ -23,13 +23,13 @@ class Toggle extends React.PureComponent {
 	};
 
 	state = {
-		isActive: this.props.isActive
+		'isActive': this.props.isActive,
 	};
 
 	onChange(e) {
 		this.props.onChange();
 		this.setState({
-			'isActive': e.target.checked
+			'isActive': e.target.checked,
 		}, this.props.onAfterChange);
 	}
 
@@ -49,7 +49,8 @@ class Toggle extends React.PureComponent {
 						className={s.input}
 						checked={this.state.isActive}
 						onChange={this.onChange.bind(this)}
-						{...this.props.inputProps} />
+						{...this.props.inputProps}
+					/>
 					{this.renderLabel()}
 					<span className={s.box} />
 				</label>

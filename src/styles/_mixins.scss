@@ -1,78 +1,69 @@
-@mixin screen($size) {
-	$desktop: "(min-width: 1025px)";
-	$nonDesktop: "(max-width: 1024px)";
-	
-	$tablet: "(min-width: 768px) and (max-width: 1024px)";
-	$tablet-portrait: '(min-width: 768px) and (max-width: 1024px) and (orientation: portrait)';
-	
-	$mobile: "(max-width: 767px)";
-	$mobile-landscape: '(max-width: 767px) and (orientation: landscape)';
-	$nonMobile: "(min-width: 768px)";
+@import "functions";
+/*
+	Media queries
 
-	$specialMobileView: "(max-width: 1199px)";
+	@usage —
+	.element {
+		@include screen('tablet') {
+			width: 90%;
+		}
+		@include screen('desktop') {
+			width: 85%;
+		}
+		@include screen('(min-width: 999px)') {
+			width: 1280px;
+		}
+	}
+ */
+@mixin screen($size) {
 	
-	@if $size == desktop {
-		@media only screen and #{$desktop} {
-			@content;
+	$mediaQueries: (
+		'desktop': '(min-width: 1025px)',
+		'nonDesktop': '(max-width: 1024px)',
+		'tablet': '(min-width: 768px) and (max-width: 1024px)',
+		'tablet-portrait': '(min-width: 768px) and (max-width: 1024px) and (orientation: portrait)',
+		'mobile': '(max-width: 767px)',
+		'mobile-landscape': '(max-width: 767px) and (orientation: landscape)',
+		'nonMobile': '(min-width: 768px)',
+	);
+	
+	// Use predefined media query
+	@each $key, $value in $mediaQueries {
+		@if $key == $size {
+			@media only screen and #{$value} {
+				@content;
+			}
 		}
-	} @else if $size == nonDesktop {
-		@media only screen and #{$nonDesktop} {
-			@content;
-		}
-	} @else if $size == tablet {
-		@media only screen and #{$tablet} {
-			@content;
-		}
-	} @else if $size == tablet-portrait {
-		@media only screen and #{$tablet-portrait} {
-			@content;
-		}
-	} @else if $size == mobile {
-		@media only screen and #{$mobile} {
-			@content;
-		}
-	} @else if $size == mobile-landscape {
-		@media only screen and #{$mobile-landscape} {
-			@content;
-		}
-	} @else if $size == nonMobile {
-		@media only screen and #{$nonMobile} {
-			@content;
-		}
-	} @else if $size == specialMobileView {
-		@media only screen and #{$specialMobileView} {
-			@content;
-		}
-	} @else {
+	}
+	
+	// Use custom media query
+	@if map-has-key($mediaQueries, $size) != true {
 		@media only screen and #{$size} {
 			@content;
 		}
 	}
 }
 
-//USAGE
-//.wrapper {
-//	margin: 0 auto;
-//	width: 100%;
-//	@include screen('tablet') {
-//		width: 90%;
-//	}
-//	@include screen('desktop') {
-//		width: 85%;
-//	}
-//}
-//.wrapper {
-//	@include screen('(min-width: 1367px)') {
-//		width: 1280px;
-//	}
-//}
-
-@mixin retina {
-	@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+@mixin retina($x: 3) {
+	@media
+	only screen and (-webkit-min-device-pixel-ratio: $x),
+	only screen and (min-device-pixel-ratio: $x) {
 		@content;
 	}
 }
 
+/*
+	@usage —
+	.menu li {
+		@include relative;
+	}
+	.sub-menu {
+		@include absolute(top 100% left 0);
+	}
+	.sticky-bar {
+		@include fixed(top 0 left 0);
+	}
+*/
 @mixin position($position, $args) {
 	@each $o in top right bottom left {
 		$i: index($args, $o);
@@ -82,19 +73,16 @@
 	}
 	position: $position;
 }
-
-// Positioning helpers
 @mixin absolute($args: '') {
 	@include position(absolute, $args);
 }
-
 @mixin fixed($args: '') {
 	@include position(fixed, $args);
 }
-
 @mixin relative($args: '') {
 	@include position(relative, $args);
 }
+
 
 @mixin center() {
 	position: absolute;
@@ -114,18 +102,6 @@
 	top: 50%;
 	transform: translateY(-50%);
 }
-
-
-//USAGE
-//.menu li {
-//	@include relative;
-//}
-//.sub-menu {
-//	@include absolute(top 100% left 0);
-//}
-//.sticky-bar {
-//	@include fixed(top 0 left 0);
-//}
 
 
 @mixin clearfix {
@@ -186,13 +162,58 @@
 	user-select: none;
 }
 
-// USAGE: @include font-size(14px) => font-size: 14px; font-size: 0.8rem;
-@function calculateRem($size) {
-	$remSize: $size / 16px; // 16px is a $base unit
-	@return $remSize * 1rem;
-}
-
 @mixin font-size($size) {
 	font-size: $size;
 	font-size: calculateRem($size);
+}
+
+/* *
+* - Grid system
+*
+* - Two types:
+    - 1. grid with floats (default)
+    - 2. inline - grid with inline-blocks
+*
+* - @{link - http://thesassway.com/intermediate/simple-grid-mixins}
+* */
+@mixin row ($inline: false) {
+	@if $inline {
+		font-size: 0;
+	} @else {
+		@include clearfix();
+	}
+}
+
+@mixin col (
+	$col,
+	$sum,
+	$gap    : 1em,
+	$first  : false,
+	$last   : false,
+	$inline : false,
+	$align  : top,
+	$fluid  : false,
+	$float  : right
+) {
+	
+	width: 100%;
+	padding-left: if($first, 0, $gap);
+	padding-right: if($last, 0, $gap);
+	
+	@if $inline {
+		display: inline-block;
+		font-size: $gap;
+	} @else {
+		float: $float;
+	}
+	
+	@if $fluid {
+		width: percentage($col/$sum);
+	}
+	
+	@media only screen and (min-width: 768px) {
+		width: percentage($col/$sum);
+		vertical-align: if($inline, $align, initial);
+	}
+	
 }

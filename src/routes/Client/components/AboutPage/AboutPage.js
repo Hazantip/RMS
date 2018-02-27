@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as css from '../../styles/about-page.css';
 
 const AboutPage = (props) => {
@@ -10,7 +10,11 @@ const AboutPage = (props) => {
 	return (
 		<div>
 			<h2 className={`${css.altHeader}`}>About</h2>
-			<button onClick={() => { action('' + Math.random()); }}>
+			<button
+				onClick={() => {
+					action(`${Math.random()}`);
+				}}
+			>
 				Test demo action
 			</button>
 			<p>
@@ -33,7 +37,7 @@ const AboutPage = (props) => {
 				<Link to="/">Go to home</Link>
 			</p>
 			<h4>img tag</h4>
-			<img className="image" src="/assets/images/bg.jpg" alt=""/>
+			<img className="image" src="/assets/images/bg.jpg" alt="" />
 			<h4>background image</h4>
 			<div className="image-bg" />
 		</div>

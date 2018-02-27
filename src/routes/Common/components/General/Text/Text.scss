@@ -1,0 +1,61 @@
+@import '../../../../../styles/typography';
+@import '../../../../../styles/mixins';
+
+@each $key, $value in $font-family {
+	.#{$key} {
+		@include font($family: $key);
+	}
+}
+
+@each $key, $value in $font-size {
+	.#{$key} {
+		@include font($size: $key);
+	}
+}
+
+@each $key, $value in $font-weight {
+	.w-#{$key} {
+		@include font($weight: $key);
+	}
+}
+
+@each $key, $value in $font-transform {
+	.#{$key} {
+		@include font($transform: $key);
+	}
+}
+
+@each $key, $value in $font-colors {
+	.#{$key} {
+		@include font($color: $key);
+	}
+}
+
+@include screen('iPad_landscape') {
+	.large_3 {
+		font-size: 3.0rem;
+		line-height: normal;
+	}
+}
+@include screen('nonDesktop') {
+	.mega {
+		font-size: 2.5rem;
+		line-height: normal;
+	}
+	.large {
+		font-size: 1.86rem;
+		line-height: normal;
+	}
+	.large_3 {
+		font-size: 1.86rem;
+		line-height: normal;
+	}
+	.medium {
+		font-size: 1.8rem;
+		line-height: normal;
+	}
+	.small {
+		font-size: 1.6rem;
+		line-height: normal;
+	}
+}

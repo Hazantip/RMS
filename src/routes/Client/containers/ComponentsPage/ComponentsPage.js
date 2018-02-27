@@ -1,8 +1,8 @@
 import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as actions from '../../actions/testAction';
 import Toggle from '../../components/Toggle/Toggle';
 import Checkbox from '../../components/Checkbox/Checkbox';
@@ -18,61 +18,69 @@ export const ComponentsPage = () => {
 				<div className={s.title}>Toggle</div>
 				<Toggle
 					isActive={true}
-					//eslint-disable-next-line no-console
-					onChange={() => { console.log('onChange'); }}
-					//eslint-disable-next-line no-console
-					onAfterChange={() => { console.log('onAfterChange'); }}
+					onChange={() => {
+						//eslint-disable-next-line no-console
+						console.log('onChange');
+					}}
+					onAfterChange={() => {
+						//eslint-disable-next-line no-console
+						console.log('onAfterChange');
+					}}
 				/>
-				<br/>
-				<Toggle label={'Lorem ipsum dolor sit amet, consectetur adipisicing.'} style={{ width: 340 }} />
+				<br />
+				<Toggle label={'Lorem ipsum dolor sit amet, consectetur adipisicing.'} style={{ 'width': 340 }} />
 			</div>
 			<div className={s.item}>
 				<div className={s.title}>Checkbox</div>
 				<Checkbox
 					isActive={true}
-					//eslint-disable-next-line no-console
-					onChange={() => { console.log('onChange'); }}
-					//eslint-disable-next-line no-console
-					onAfterChange={() => { console.log('onAfterChange'); }}
+					onChange={() => {
+						//eslint-disable-next-line no-console
+						console.log('onChange');
+					}}
+					onAfterChange={() => {
+						//eslint-disable-next-line no-console
+						console.log('onAfterChange');
+					}}
 				/>
-				<br/>
-				<Checkbox label={'Lorem ipsum dolor sit amet, consectetur.'} style={{ width: 240 }} />
+				<br />
+				<Checkbox label={'Lorem ipsum dolor sit amet, consectetur.'} style={{ 'width': 240 }} />
 			</div>
 			<div className={s.item}>
 				<div className={s.title}>Radio</div>
 				<Radio isActive />
-				<br/>
-				<Radio label={'Lorem ipsum dolor sit amet, consectetur.'} style={{ width: 240 }} />
+				<br />
+				<Radio label={'Lorem ipsum dolor sit amet, consectetur.'} style={{ 'width': 240 }} />
 			</div>
 			<div className={s.item}>
 				<div className={s.title}>Text Field</div>
 				<TextField />
-				<br/>
-				<TextField label={'Title: '} style={{ width: 240 }} />
+				<br />
+				<TextField label={'Title: '} style={{ 'width': 240 }} />
 			</div>
 		</div>
 	);
 };
 
 ComponentsPage.propTypes = {
-	client: PropTypes.object
+	'client': PropTypes.object,
 };
 
 function mapStateToProps(state) {
 	return {
-		client: get(state, 'client'),
+		'client': get(state, 'client'),
 	};
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		actions: bindActionCreators(actions, dispatch)
+		'actions': bindActionCreators(actions, dispatch),
 	};
 }
 
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps
+	mapDispatchToProps,
 )(ComponentsPage);
 
 /*

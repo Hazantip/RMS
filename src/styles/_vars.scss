@@ -8,16 +8,47 @@ $graphRed: #F24649;
 $primaryGreen: #39C07F;
 $graphGreen: #45E698;
 $primaryYellow: #FF9800;
+$white: #FFFFFF;
+$white_transparent: rgba(255, 255, 255, .5);
+$yellow: #F8E71C;
+$black: #000000;
 
-$black: rgba(0, 0, 0, 0.9);     // primary
-$black2: rgba(0, 0, 0, 0.7);    // secondary
-$black3: rgba(0, 0, 0, 0.54);   // third-part text
-$black4: rgba(0, 0, 0, 0.15);   // borders etc.
-$black5: rgba(0, 0, 0, 0.07);   // shadows
-$black35: rgba(0, 0, 0, 0.35);  // disabled etc.
+$black          : rgba(0, 0, 0, 0.85);
+$black-dark     : rgba(0, 0, 0, 0.7);
+$black-mid      : rgba(0, 0, 0, 0.54);
+$black-soft     : rgba(0, 0, 0, 0.35);
+$black-light    : rgba(0, 0, 0, 0.15);
+$black-lightest : rgba(0, 0, 0, 0.07);
+
+$white          : rgba(255, 255, 255, 0.9);
+$white-dark     : rgba(255, 255, 255, 0.7);
+$white-mid      : rgba(255, 255, 255, 0.54);
+$white-soft     : rgba(255, 255, 255, 0.35);
+$white-light    : rgba(255, 255, 255, 0.15);
+$white-lightest : rgba(255, 255, 255, 0.07);
 
 // Fonts
 $fontArial: Arial, sans-serif;
 $fontOSans: "Open Sans Hebrew", Arial, sans-serif;
 $fontInc: "Inconsolata", monospace;
 
+
+// Media queries
+$desktop: '(min-width: 1024px)';
+$iPad_landscape: '(min-width: 1024px) and (max-width: 1024px)';
+$nonDesktop: '(max-width: 1023px)';
+$tablet: '(min-width: 768px) and (max-width: 1024px)';
+$tablet-portrait: '(min-width: 768px) and (max-width: 1024px) and (orientation: portrait)';
+$mobile: '(max-width: 767px)';
+$mobile-landscape: '(max-width: 767px) and (orientation: landscape)';
+$nonMobile: '(min-width: 768px)';
+
+// export to JS
+@value desktop: #{$desktop};
+@value iPad_landscape: #{$iPad_landscape};
+@value nonDesktop: #{$nonDesktop};
+@value tablet: #{$tablet};
+@value tablet-portrait: #{$tablet-portrait};
+@value mobile: #{$mobile};
+@value mobile-landscape: #{$mobile-landscape};
+@value nonMobile: #{$nonMobile};

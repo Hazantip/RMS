@@ -12,23 +12,23 @@ class TextField extends React.PureComponent {
 		'label': PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.node,
-		])
+		]),
 	};
 
 	static defaultProps = {
 		'value': false,
 		'onChange': noop,
-		'onAfterChange': noop
+		'onAfterChange': noop,
 	};
 
 	state = {
-		value: ''
+		'value': '',
 	};
 
 	onChange(e) {
 		this.props.onChange();
 		this.setState({
-			'value': e.target.value
+			'value': e.target.value,
 		}, this.props.onAfterChange);
 	}
 

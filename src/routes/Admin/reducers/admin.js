@@ -1,15 +1,15 @@
-import {TEST_ACTION_CONST} from '../../Client/constants/actionTypes';
-//import func from '../utils/somFunc';
 import { assign } from 'lodash';
+import { TEST_ACTION_CONST } from '../../Client/constants/actionTypes';
+//import func from '../utils/somFunc';
 
 const initialState = {
-	level1: {
+	'level1': {
 		'name': 'level 1',
-		level2: {
+		'level2': {
 			'name': 'level 2',
-		}
+		},
 	},
-	name: 'admin data'
+	'name': 'admin data',
 };
 
 // IMPORTANT: Note that with Redux, state should NEVER be changed.
@@ -24,7 +24,7 @@ export default function adminReducer(state = initialState, action) {
 		case TEST_ACTION_CONST:
 			// For this example, just simulating a save by changing date modified.
 			// In a real app using Redux, you might use redux-thunk and handle the async call in fuelSavingsActions.js
-			return assign({}, state, {dateModified: action.dateModified});
+			return assign({}, state, { 'dateModified': action.dateModified });
 
 		case 2:
 			newState = assign({}, state);

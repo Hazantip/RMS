@@ -1,0 +1,154 @@
+/**
+	1. FIXME: webpack doesn't alert calling undefined function
+	
+	2. If you are not strong with scss maps, take a look at
+	{ @link https://www.sitepoint.com/extra-map-functions-sass/}
+*/
+
+
+/**
+	Get value in SCSS $map
+	@usage — padding-top: get($popup, padding-top);
+ */
+@function get($map, $name) {
+	@if map-has-key($map, $name) {
+		@return map-get($map, $name);
+	} @else if ($name) {
+		@warn "The key #{$name} is not in the map ’#{$map}’";
+	}
+
+	@return null;
+};
+
+/**
+	Get value in nested SCSS $map
+	@usage — map-deep-get($map, $level1, $level2)
+ */
+@function map-deep-get($map, $keys...) {
+	@each $key in $keys {
+		@if ($key) {
+			$map: map-get($map, $key);
+		} @else if ($key) {
+			@warn "The key #{$key} is not in the map ’#{$map}’";
+			@return null;
+		}
+	}
+	@return $map;
+}
+
+/**
+	Math.pow
+ */
+@function pow($number, $exp) {
+	$value: 1;
+	@if $exp > 0 {
+		@for $i from 1 through $exp {
+			$value: $value * $number;
+		}
+	}
+	@else if $exp < 0 {
+		@for $i from 1 through -$exp {
+			$value: $value / $number;
+		}
+	}
+	@return $value;
+}
+
+/**
+	Factorial
+ */
+@function fact($number) {
+	$value: 1;
+	@if $number > 0 {
+		@for $i from 1 through $number {
+			$value: $value * $i;
+		}
+	}
+	@return $value;
+}
+
+/**
+	Math.PI
+ */
+@function pi() {
+	@return 3.14159265359;
+}
+
+/**
+	Get angle in radians
+ */
+@function rad($angle) {
+	$unit: unit($angle);
+	$unitless: $angle / ($angle * 0 + 1);
+	// If the angle has 'deg' as unit, convert to radians.
+	@if $unit == deg {
+		$unitless: $unitless / 180 * pi();
+	}
+	@return $unitless;
+}
+
+/**
+	Math.sin
+ */
+@function sin($angle) {
+	$sin: 0;
+	$angle: rad($angle);
+	// Iterate a bunch of times.
+	@for $i from 0 through 10 {
+		$sin: $sin + pow(-1, $i) * pow($angle, (2 * $i + 1)) / fact(2 * $i + 1);
+	}
+	@return $sin;
+}
+
+/**
+	Math.cos
+ */
+@function cos($angle) {
+	$cos: 0;
+	$angle: rad($angle);
+	// Iterate a bunch of times.
+	@for $i from 0 through 10 {
+		$cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
+	}
+	@return $cos;
+}
+
+/**
+	Math.tan
+ */
+@function tan($angle) {
+	@return sin($angle) / cos($angle);
+}
+
+/**
+	Random number in range
+ */
+@function randomNum($min, $max) {
+	$rand: random();
+	$randomNum: $min + floor($rand * (($max - $min) + 1));
+	
+	@return $randomNum;
+}
+
+
+/**
+	Convert px to rem
+	@usage — calculateRem(16px) => font-size: 1rem;
+ */
+@function calculateRem($size) {
+	$remSize: $size / 16px; // 16px is a $base unit
+	@return $remSize * 1rem;
+}
+
+/*
+	Remove the unit of a number
+	@param {Number} $number - Number to remove unit from
+	@return {Number} - Unitless number
+ */
+@function strip-unit($number) {
+	@if type-of($number) == 'number' and not unitless($number) {
+		@return $number / ($number * 0 + 1);
+	}
+	
+	@return $number;
+}

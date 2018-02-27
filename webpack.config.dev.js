@@ -1,3 +1,4 @@
+/* eslint-disable */
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
@@ -7,7 +8,7 @@ const CONFIG = require('./webpack.base');
 
 export default {
 	resolve: {
-		extensions: ['*', '.js', '.jsx', '.json']
+		extensions: ['*', '.js', '.jsx', '.json'],
 	},
 	devtool: 'eval-source-map', // more info:https://webpack.js.org/guides/development/#using-source-maps and https://webpack.js.org/configuration/devtool/
 	entry: [
@@ -21,12 +22,12 @@ export default {
 	output: {
 		path: CONFIG.DIST, // Note: Physical files are only output by the production build task `npm run build`.
 		publicPath: '/',
-		filename: 'bundle.js'
+		filename: 'bundle.js',
 	},
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('development'), // Tells React to build in either dev or prod modes. https://facebook.github.io/react/downloads.html (See bottom)
-			__DEV__: true
+			__DEV__: true,
 		}),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoEmitOnErrorsPlugin(),
@@ -34,9 +35,9 @@ export default {
 			template: 'src/index.ejs',
 			minify: {
 				removeComments: true,
-				collapseWhitespace: true
+				collapseWhitespace: true,
 			},
-			inject: true
+			inject: true,
 		}),
 		new webpack.LoaderOptionsPlugin({
 			minimize: false,
@@ -44,7 +45,7 @@ export default {
 			noInfo: true, // set to false to see a list of every file being bundled.
 			options: {
 				sassLoader: {
-					includePaths: [path.resolve(__dirname, 'src', 'scss')]
+					includePaths: [path.resolve(__dirname, 'src', 'scss')],
 				},
 				context: '/',
 				postcss: () => [autoprefixer({
@@ -53,21 +54,33 @@ export default {
 						'ie >= 10',
 					],
 				})],
-			}
-		})
+			},
+		}),
 	],
 	module: {
 		rules: [
-			{test: /\.jsx?$/, exclude: /node_modules/, loaders: ['babel-loader']},
-			{test: /\.eot(\?v=\d+.\d+.\d+)?$/, loader: 'file-loader'},
+			{ test: /\.js$/, 'enforce': 'pre', 'loader': 'eslint-loader' },
+			{
+				'test': /\.js$/,
+				'use': {
+					'loader': 'babel-loader',
+					'options': {
+						'cacheDirectory': '/tmp',
+						'presets': ['env', 'react', 'stage-0'],
+						'plugins': ['transform-decorators-legacy'],
+					},
+				},
+				'exclude': /(node_modules|server|backend)/,
+			},
+			{ test: /\.eot(\?v=\d+.\d+.\d+)?$/, loader: 'file-loader' },
 			{
 				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+				loader: 'url-loader?limit=10000&mimetype=application/font-woff',
 			},
-			{test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream'},
-			{test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml'},
-			{test: /\.(jpe?g|png|gif)$/i, loader: 'file-loader?name=[name].[ext]'},
-			{test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
+			{ test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream' },
+			{ test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml' },
+			{ test: /\.(jpe?g|png|gif)$/i, loader: 'file-loader?name=[name].[ext]' },
+			{ test: /\.ico$/, loader: 'file-loader?name=[name].[ext]' },
 			{
 				//test: /(\.css|\.scss|\.sass)$/,
 				//loaders: ['style-loader', 'css-loader?sourceMap', 'postcss-loader', 'sass-loader?sourceMap']
@@ -79,7 +92,7 @@ export default {
 					'postcss-loader',
 					'sass-loader?sourceMap',
 				],
-			}
-		]
-	}
+			},
+		],
+	},
 };

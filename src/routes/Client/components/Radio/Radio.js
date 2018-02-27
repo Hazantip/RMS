@@ -13,23 +13,23 @@ class Radio extends React.PureComponent {
 		'label': PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.node,
-		])
+		]),
 	};
 
 	static defaultProps = {
 		'isActive': false,
 		'onChange': noop,
-		'onAfterChange': noop
+		'onAfterChange': noop,
 	};
 
 	state = {
-		isActive: this.props.isActive
+		'isActive': this.props.isActive,
 	};
 
 	onChange(e) {
 		this.props.onChange();
 		this.setState({
-			'isActive': e.target.checked
+			'isActive': e.target.checked,
 		}, this.props.onAfterChange);
 	}
 
@@ -50,7 +50,8 @@ class Radio extends React.PureComponent {
 						checked={this.state.isActive}
 						onChange={this.onChange.bind(this)}
 						name="defaultRadio"
-						{...this.props.inputProps} />
+						{...this.props.inputProps}
+					/>
 					{this.renderLabel()}
 					<span className={s.box} />
 				</label>

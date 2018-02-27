@@ -1,0 +1,39 @@
+@import '~styles/vars';
+
+.button {
+	cursor: pointer;
+	height: 30px;
+	padding: 0 20px;
+	border: 1px solid $yellow;
+	border-radius: 30px;
+	color: $yellow;
+	transition: color .35s, border .35s, background-color .35s;
+	&:hover {
+		color: $black;
+		background-color: $yellow;
+	}
+}
+
+.label {
+	line-height: 30px;
+	color: inherit;
+	display: block;
+}
+
+.button_large {
+	composes: button;
+
+	padding: 0 30px;
+	border-radius: 40px;
+	min-height: 46px;
+	.label {
+		line-height: 46px;
+	}
+}
+
+.disabled {
+	pointer-events: none;
+	color: $white_transparent;
+	border: 1px solid $white_transparent;
+	background-color: transparent;
+}

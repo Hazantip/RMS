@@ -1,0 +1,296 @@
+@import '../../../../../styles/theme';
+
+// TODO: support for % :
+// $grid-base-width: 1400px;
+// $grid-base-gutter: 15px;
+// $grid-width: parseInt($grid-base-width)
+// $grid-gutter: parseInt($grid-base-gutter)
+// $grid-unit: unit($grid-base-width)
+//
+// @see http://www.sitespiral.jp/information/510/
+
+/*****************
+	@mixins
+******************/
+
+@mixin grid($width: $grid-width + $grid-unit, $gutter: $grid-gutter + $grid-unit) {
+	position: relative;
+	margin: 0 auto;
+	max-width: 100%;
+	width: $width;
+	padding: 0 $gutter;
+
+	@content;
+}
+
+@mixin grid-row($gutter: $grid-gutter + $grid-unit) {
+	display: flex;
+	flex-wrap: wrap;
+	margin-left: -$gutter;
+	margin-right: -$gutter;
+
+	@content;
+}
+
+@mixin grid-col($col: null, $col-max: $grid-col-max, $gutter: $grid-gutter + $grid-unit, $col-offset: false) {
+	$flex-grow: 0;
+	$flex-shrink: 0;
+	$flex-basis: percentage($col / $col-max);
+
+	flex: $flex-grow $flex-shrink $flex-basis;
+	flex-wrap: wrap;
+	flex-direction: row;
+	padding: 0 $gutter;
+
+	@content;
+}
+
+@mixin grid-col-defaults($gutter: $grid-gutter + $grid-unit) {
+	width: 100%;
+	min-height: 1px;
+	position: relative;
+	padding: 0 $gutter;
+}
+
+@mixin grid-col-offset($col-offset: 0, $col-max: $grid-col-max, $grid-dir: $grid-dir) {
+	@if $grid-dir == 'ltr' {
+		margin-left: percentage($col-offset / $col-max);
+	}
+	@if $grid-dir == 'rtl' {
+		margin-right: percentage($col-offset / $col-max);
+	}
+}
+
+/*****************
+	@grid
+******************/
+.grid {
+	@include grid();
+	&.stretch {
+		width: 100%;
+		@include screen('nonMobile') {
+			padding-left: 100px;
+			padding-right: 100px;
+		}
+	}
+	&.stretch-fill {
+		width: 100%;
+		overflow: hidden;
+		@include screen('nonMobile') {
+			padding-left: $stretch-fill-grid-inner-space;
+			padding-right: $stretch-fill-grid-inner-space;
+			margin: $stretch-fill-grid-outer-space auto;
+			width: calc(100% - #{$stretch-fill-grid-outer-space * 2});
+			min-height: calc(
+				100vh - #{$header-xl-height} - #{$stretch-fill-grid-outer-space * 2}
+			); // 120px = header height
+			background-color: $bg-grid;
+			border-radius: 5px;
+		}
+	}
+}
+
+/*****************
+	@row
+******************/
+.row {
+	@include grid-row();
+
+	/**
+		Stretch vertically columns inside popup component
+		to extend column borders to popup-content borders
+
+		@info - ready only for dir="ltr"
+	 */
+	&.popup-stretched-row {
+		min-height: calc(
+			100vh - #{get($popup, inner-padding-top)} - #{get($popup, inner-padding-bottom)} - #{get($popup, content-padding-top)} - #{get(
+					$popup,
+					content-padding-bottom
+				)}
+		);
+		&.stretch-on-right {
+			width: calc(100% + #{get($popup, content-padding-right)} + #{$grid-gutter + px});
+		}
+		&.stretch-on-left {
+			width: calc(100% + #{get($popup, content-padding-left)} + #{$grid-gutter + px});
+			margin-left: get($popup, content-padding-left);
+		}
+		.popup-stretched-col {
+			margin-top: -(get($popup, content-padding-top));
+			margin-bottom: -(get($popup, content-padding-bottom));
+		}
+	}
+}
+
+/*****************
+	@column:predefined
+******************/
+@for $i from 1 to ($grid-col-max + 1) {
+	.col-xs-#{$i} {
+		@include grid-col-defaults();
+		@include screen('mobile') {
+			@include grid-col($col: $i) {
+				// you can define here some specific css for mobile screen
+			}
+		}
+	}
+	.col-md-#{$i} {
+		@include grid-col-defaults();
+		@include screen('nonMobile') {
+			@include grid-col($col: $i) {
+				// you can define here some specific css for non-mobile screen
+			}
+		}
+	}
+	.col-offset-left-#{$i} {
+		@include grid-col-offset($col-offset: $i, $grid-dir: 'ltr');
+	}
+	.col-offset-right-#{$i} {
+		@include grid-col-offset($col-offset: $i, $grid-dir: 'rtl');
+	}
+}
+
+/*****************
+	@column:flexible
+******************/
+.col {
+	@include grid-col-defaults();
+	flex-basis: 0;
+	flex-grow: 1;
+	max-width: 100%;
+}
+
+/*****************
+	@helpers
+
+	n[p|m][l|r]
+	n - "no"
+	p - "padding"
+	m - "margin"
+	l - "left"
+	r - "right"
+	s - "stretch"[size]
+******************/
+.npl {
+	padding-left: 0 !important;
+}
+
+.npr {
+	padding-right: 0 !important;
+}
+
+.nml {
+	margin-left: 0 !important;
+}
+
+.nmr {
+	margin-right: 0 !important;
+}
+
+.no-gutters {
+	margin-right: 0;
+	margin-left: 0;
+
+	> .col,
+	> [class*='col-'] {
+		padding-right: 0;
+		padding-left: 0;
+	}
+}
+
+.s {
+	&15 {
+		margin-left: -15px;
+		margin-right: -15px;
+		width: auto;
+	}
+	&30 {
+		margin-left: -30px;
+		margin-right: -30px;
+		width: auto;
+	}
+	&45 {
+		margin-left: -45px;
+		margin-right: -45px;
+		width: auto;
+	}
+	&60 {
+		margin-left: -60px;
+		margin-right: -60px;
+		width: auto;
+	}
+}
+
+.sl {
+	&15 {
+		margin-left: -15px;
+		width: auto;
+	}
+	&30 {
+		margin-left: -30px;
+		width: auto;
+	}
+	&45 {
+		margin-left: -45px;
+		width: auto;
+	}
+	&60 {
+		margin-left: -60px;
+		width: auto;
+	}
+}
+
+.sr {
+	&15 {
+		margin-right: -15px;
+		width: auto;
+	}
+	&30 {
+		margin-right: -30px;
+		width: auto;
+	}
+	&45 {
+		margin-right: -45px;
+		width: auto;
+	}
+	&60 {
+		margin-right: -60px;
+		width: auto;
+	}
+}
+
+/* Align horizontal any item inside the flexible container */
+$justify-content-props: flex-start, flex-end, center, space-between, space-around;
+@each $prop in $justify-content-props {
+	.justify-content-#{$prop} {
+		display: flex;
+		justify-content: $prop;
+	}
+}
+
+/* Align vertically any item inside the flexible container */
+$align-items-props: flex-start, flex-end, center, space-between, space-around;
+@each $prop in $align-items-props {
+	.align-items-#{$prop} {
+		display: flex;
+		align-items: $prop;
+	}
+}
+
+/* Align self any item inside the flexible container */
+$align-self-props: stretch, center, flex-start, flex-end, baseline;
+@each $prop in $align-self-props {
+	.align-self-#{$prop} {
+		align-self: $prop;
+	}
+}
+
+/* Flex direction for any item inside the flexible container */
+$flex-direction-props: column, column-reverse, row, row-reverse;
+@each $prop in $flex-direction-props {
+	.flex-direction-#{$prop} {
+		display: flex;
+		flex-direction: $prop;
+	}
+}
